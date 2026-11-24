@@ -1,0 +1,369 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Available Flights | QuickSky</title>
+
+    <link rel="stylesheet"
+          href="{% static 'flights/css/style.css' %}">
+
+    <style>
+        .results-section {
+            padding: 55px 8%;
+            min-height: 80vh;
+        }
+
+        .results-header {
+            margin-bottom: 30px;
+        }
+
+        .results-header h1 {
+            color: #102b52;
+            font-size: 30px;
+            margin-bottom: 12px;
+        }
+
+        .route-summary {
+            color: #748398;
+            font-size: 14px;
+        }
+
+        .results-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .results-toolbar select {
+            padding: 11px;
+            border: 1px solid #dce5f0;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .flight-card {
+            background: white;
+            border: 1px solid #e3eaf3;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 18px;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr 1fr;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 5px 18px rgba(0,0,0,.035);
+        }
+
+        .airline-name {
+            font-size: 17px;
+            font-weight: 700;
+            color: #102b52;
+        }
+
+        .flight-number {
+            color: #8996a7;
+            font-size: 12px;
+            margin-top: 7px;
+        }
+
+        .flight-route {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .flight-time {
+            text-align: center;
+        }
+
+        .flight-time h3 {
+            color: #102b52;
+            font-size: 22px;
+        }
+
+        .flight-time p {
+            color: #748398;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .route-line {
+            width: 70px;
+            height: 2px;
+            background: #b8d7ff;
+            position: relative;
+        }
+
+        .route-line::after {
+            content: "✈";
+            position: absolute;
+            top: -12px;
+            left: 28px;
+            color: #1769e0;
+        }
+
+        .flight-price {
+            text-align: right;
+        }
+
+        .flight-price h2 {
+            color: #1769e0;
+            font-size: 24px;
+        }
+
+        .flight-price p {
+            font-size: 12px;
+            color: #8996a7;
+            margin-top: 5px;
+        }
+
+        .book-btn {
+            display: inline-block;
+            margin-top: 12px;
+            background: #1769e0;
+            color: white;
+            padding: 11px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .empty-state, .error-state {
+            padding: 50px 25px;
+            background: white;
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .empty-state h2 {
+            color: #102b52;
+            margin-bottom: 12px;
+        }
+
+        .error-state {
+            color: #b42318;
+            background: #fff1f0;
+            margin-bottom: 25px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #1769e0;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @media(max-width: 750px) {
+            .flight-card {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .flight-price {
+                text-align: center;
+            }
+
+            .results-toolbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="{% url 'home' %}" class="logo">
+        ✈ QuickSky<span>Flights</span>
+    </a>
+
+    <a href="{% url 'home' %}" class="login-btn">
+        New Search
+    </a>
+
+</header>
+
+
+<main class="results-section">
+
+    <div class="results-header">
+
+        <h1>Available Flights</h1>
+
+        <p class="route-summary">
+            {% if source and destination %}
+                {{ source }} → {{ destination }}
+                &nbsp; | &nbsp;
+                {{ departure }}
+                &nbsp; | &nbsp;
+                {{ passengers }} Passenger(s)
+            {% else %}
+                Search for your next journey.
+            {% endif %}
+        </p>
+
+    </div>
+
+
+    {% if error %}
+
+        <div class="error-state">
+            <h3>Search Error</h3>
+            <p>{{ error }}</p>
+        </div>
+
+    {% elif search_completed %}
+
+        <div class="results-toolbar">
+
+            <p>
+                <strong>{{ flight_count }}</strong>
+                flight(s) found
+            </p>
+
+            <form method="GET" action="{% url 'search_flights' %}">
+
+                <input type="hidden" name="source" value="{{ source }}">
+                <input type="hidden" name="destination" value="{{ destination }}">
+                <input type="hidden" name="departure" value="{{ departure }}">
+                <input type="hidden" name="passengers" value="{{ passengers }}">
+                <input type="hidden" name="trip_type" value="{{ trip_type }}">
+
+                <label for="sort">Sort by: </label>
+
+                <select name="sort" id="sort"
+                        onchange="this.form.submit()">
+
+                    <option value="price"
+                        {% if sort_by == 'price' %}selected{% endif %}>
+                        Lowest Price
+                    </option>
+
+                    <option value="departure"
+                        {% if sort_by == 'departure' %}selected{% endif %}>
+                        Earliest Departure
+                    </option>
+
+                    <option value="arrival"
+                        {% if sort_by == 'arrival' %}selected{% endif %}>
+                        Earliest Arrival
+                    </option>
+
+                </select>
+
+            </form>
+
+        </div>
+
+
+        {% for flight in flights %}
+
+            <div class="flight-card">
+
+                <div>
+
+                    <h3 class="airline-name">
+                        {{ flight.airline.name }}
+                    </h3>
+
+                    <p class="flight-number">
+                        {{ flight.flight_number }}
+                    </p>
+
+                </div>
+
+
+                <div class="flight-route">
+
+                    <div class="flight-time">
+
+                        <h3>{{ flight.departure_time|date:"H:i" }}</h3>
+
+                        <p>{{ flight.source.code }}</p>
+
+                    </div>
+
+                    <div class="route-line"></div>
+
+                    <div class="flight-time">
+
+                        <h3>{{ flight.arrival_time|date:"H:i" }}</h3>
+
+                        <p>{{ flight.destination.code }}</p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="flight-price">
+
+                    <h2>
+                        ₹{{ flight.price|floatformat:0 }}
+                    </h2>
+
+                    <p>Per passenger</p>
+
+                    <p>
+                        {{ flight.available_seats }} seats available
+                    </p>
+
+                    <a href="{% url 'book_flight' flight.id %}?passengers={{ passenger_count|default:1 }}" class="book-btn">
+                        Book Now →
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% empty %}
+
+            <div class="empty-state">
+
+                <h2>No Flights Found</h2>
+
+                <p>
+                    We couldn't find flights for your selected route
+                    and date.
+                </p>
+
+                <a href="{% url 'home' %}" class="back-link">
+                    Try another search →
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+    <a href="{% url 'home' %}" class="back-link">
+        ← Back to Homepage
+    </a>
+
+</main>
+
+
+<footer>
+
+    <a href="{% url 'home' %}" class="logo footer-logo">
+        ✈ QuickSky<span>Flights</span>
+    </a>
+
+    <p>© 2026 QuickSky Flights. All rights reserved.</p>
+
+</footer>
+
+</body>
+</html>

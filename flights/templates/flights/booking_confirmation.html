@@ -1,0 +1,31 @@
+
+{% extends 'flights/base.html' %}
+
+{% block content %}
+<div class="booking-container">
+    <div class="success-message">
+        <h1>Booking Successful!</h1>
+        <p>Your flight booking has been created successfully.</p>
+    </div>
+
+    <div class="flight-summary">
+        <h2>Booking Confirmation</h2>
+
+        <p><strong>PNR:</strong> {{ booking.pnr }}</p>
+        <p><strong>Flight:</strong> {{ booking.flight.flight_number }}</p>
+        <p><strong>Airline:</strong> {{ booking.flight.airline.name }}</p>
+        <p><strong>Route:</strong>
+            {{ booking.flight.source.city }} →
+            {{ booking.flight.destination.city }}
+        </p>
+        <p><strong>Passengers:</strong> {{ booking.passengers_count }}</p>
+        <p><strong>Total Amount:</strong> ₹{{ booking.total_amount }}</p>
+        <p><strong>Booking Status:</strong> {{ booking.booking_status }}</p>
+        <p><strong>Payment Status:</strong> {{ booking.payment_status }}</p>
+    </div>
+
+    <a href="{% url 'dashboard' %}" class="book-btn">
+        Back to Dashboard
+    </a>
+</div>
+{% endblock %}

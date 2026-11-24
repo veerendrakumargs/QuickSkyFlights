@@ -1,0 +1,537 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --primary: #1769e0;
+    --dark: #102b52;
+    --light-blue: #eaf3ff;
+    --text: #25364d;
+    --muted: #748398;
+    --white: #ffffff;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: #f7faff;
+}
+
+
+/* Navbar */
+
+.navbar {
+    height: 80px;
+    padding: 0 8%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--dark);
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.logo-icon {
+    color: var(--primary);
+}
+
+.nav-links {
+    display: flex;
+    gap: 35px;
+}
+
+.nav-links a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary);
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.login-btn {
+    text-decoration: none;
+    background: var(--primary);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 9px;
+    font-weight: 600;
+}
+
+.menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+
+/* Hero */
+
+.hero {
+    min-height: 590px;
+    padding: 90px 8% 110px;
+
+    background:
+        linear-gradient(110deg,
+        rgba(7, 31, 67, .94),
+        rgba(17, 88, 170, .72)),
+        url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1800')
+        center/cover;
+
+    color: white;
+    position: relative;
+}
+
+.hero-content {
+    max-width: 650px;
+}
+
+.tagline {
+    display: inline-block;
+    padding: 10px 15px;
+    background: rgba(255,255,255,.15);
+    border-radius: 30px;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+}
+
+.hero h1 {
+    font-size: clamp(38px, 5vw, 62px);
+    line-height: 1.15;
+    margin: 25px 0;
+    font-weight: 800;
+}
+
+.hero h1 span {
+    color: #80bdff;
+}
+
+.hero-content p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #e1edff;
+    max-width: 510px;
+}
+
+
+/* Search container */
+
+.search-container {
+    background: white;
+    color: var(--text);
+    max-width: 1100px;
+    padding: 30px;
+    border-radius: 17px;
+
+    position: absolute;
+    left: 50%;
+    bottom: -100px;
+    transform: translateX(-50%);
+
+    width: 84%;
+    box-shadow: 0 15px 45px rgba(0,0,0,.15);
+}
+
+.search-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.search-heading h2 {
+    font-size: 23px;
+    color: var(--dark);
+}
+
+.search-heading p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.flight-icon {
+    font-size: 30px;
+    color: var(--primary);
+}
+
+.trip-options {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.trip-options label {
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.trip-options input {
+    accent-color: var(--primary);
+}
+
+.search-grid {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr 1fr 1fr;
+    gap: 12px;
+    align-items: end;
+}
+
+.input-group {
+    border: 1px solid #dce5f0;
+    border-radius: 10px;
+    padding: 13px;
+    min-width: 0;
+}
+
+.input-group label {
+    display: block;
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--muted);
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--dark);
+    background: transparent;
+}
+
+.swap-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid #dce5f0;
+    background: var(--light-blue);
+    color: var(--primary);
+    font-size: 21px;
+    cursor: pointer;
+    margin-bottom: 17px;
+}
+
+.swap-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.search-btn {
+    display: block;
+    margin: 25px auto 0;
+    width: 220px;
+    padding: 15px;
+    border: none;
+    border-radius: 9px;
+    background: var(--primary);
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.search-btn:hover {
+    background: #0d4eae;
+    transform: translateY(-2px);
+}
+
+
+/* Benefits */
+
+.benefits {
+    padding: 155px 8% 70px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.benefit-card {
+    padding: 30px;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 5px 20px rgba(0,0,0,.04);
+}
+
+.benefit-icon {
+    font-size: 30px;
+    margin-bottom: 15px;
+}
+
+.benefit-card h3 {
+    color: var(--dark);
+    margin-bottom: 10px;
+}
+
+.benefit-card p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* Destinations */
+
+.destinations {
+    padding: 50px 8% 90px;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-heading span {
+    color: var(--primary);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.section-heading h2 {
+    color: var(--dark);
+    font-size: 32px;
+    margin: 12px 0;
+}
+
+.section-heading p {
+    color: var(--muted);
+}
+
+.destination-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.destination-card {
+    height: 280px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.destination-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .4s;
+}
+
+.destination-card:hover img {
+    transform: scale(1.08);
+}
+
+.destination-info {
+    position: absolute;
+    bottom: 0;
+    padding: 25px;
+    width: 100%;
+    color: white;
+    background: linear-gradient(transparent, rgba(0,0,0,.85));
+}
+
+.destination-info p {
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+
+/* Footer */
+
+footer {
+    background: #102b52;
+    color: white;
+    padding: 40px 8%;
+    text-align: center;
+}
+
+.footer-logo {
+    color: white;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+
+footer p {
+    color: #bdcde0;
+    font-size: 12px;
+    margin: 7px;
+}
+
+
+/* Responsive design */
+
+@media (max-width: 900px) {
+
+    .search-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .swap-btn {
+        display: none;
+    }
+
+    .search-container {
+        position: relative;
+        left: auto;
+        bottom: auto;
+        transform: none;
+        width: 100%;
+        margin-top: 40px;
+    }
+
+    .hero {
+        padding-bottom: 50px;
+    }
+
+    .benefits {
+        padding-top: 60px;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .navbar {
+        padding: 0 5%;
+        height: 70px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .menu-btn {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 25px;
+        z-index: 10;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .login-btn {
+        padding: 9px 13px;
+        font-size: 12px;
+    }
+
+    .hero {
+        padding: 60px 5% 40px;
+    }
+
+    .hero h1 {
+        font-size: 39px;
+    }
+
+    .search-container {
+        padding: 20px;
+    }
+
+    .search-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benefits,
+    .destination-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .benefits {
+        padding: 50px 5%;
+    }
+
+    .destinations {
+        padding: 30px 5% 60px;
+    }
+
+    .section-heading h2 {
+        font-size: 26px;
+    }
+}
+
+
+.booking-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 25px;
+}
+
+.flight-summary,
+.passenger-card {
+    background: white;
+    padding: 22px;
+    margin: 20px 0;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.passenger-card input,
+.passenger-card select {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0 18px;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    box-sizing: border-box;
+}
+
+.success-message {
+    color: #168447;
+    text-align: center;
+}
+
+.error-message {
+    color: #b42318;
+    background: #fee4e2;
+    padding: 12px;
+    border-radius: 8px;
+    margin: 15px 0;
+}

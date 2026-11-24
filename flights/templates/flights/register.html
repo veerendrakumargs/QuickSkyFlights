@@ -1,0 +1,201 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | QuickSky Flights</title>
+
+    <link rel="stylesheet"
+          href="{% static 'flights/css/style.css' %}">
+
+    <style>
+        .auth-section {
+            min-height: 90vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 20px;
+            background: #edf4ff;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 480px;
+            padding: 40px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 12px 40px rgba(0,0,0,.08);
+        }
+
+        .auth-card h1 {
+            color: #102b52;
+            margin-bottom: 10px;
+        }
+
+        .auth-subtitle {
+            color: #748398;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .auth-field {
+            margin-bottom: 17px;
+        }
+
+        .auth-field label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .auth-field input {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #dce5f0;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        .auth-field input:focus {
+            border-color: #1769e0;
+        }
+
+        .auth-submit {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #1769e0;
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .auth-submit:hover {
+            background: #0d4eae;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 13px;
+        }
+
+        .auth-footer a {
+            color: #1769e0;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .field-error {
+            color: #d92d20;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .help-text {
+            color: #748398;
+            font-size: 11px;
+            margin-top: 5px;
+            line-height: 1.6;
+        }
+
+        .message {
+            padding: 12px;
+            background: #fff1f0;
+            color: #b42318;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 13px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a href="{% url 'home' %}" class="logo">
+        ✈ QuickSky<span>Flights</span>
+    </a>
+
+    <a href="{% url 'home' %}" class="login-btn">
+        Home
+    </a>
+</header>
+
+
+<section class="auth-section">
+
+    <div class="auth-card">
+
+        <h1>Create Account</h1>
+
+        <p class="auth-subtitle">
+            Join QuickSky and start exploring the world.
+        </p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {% for field in form %}
+
+                <div class="auth-field">
+
+                    <label for="{{ field.id_for_label }}">
+                        {{ field.label }}
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.help_text %}
+                        <div class="help-text">
+                            {{ field.help_text|safe }}
+                        </div>
+                    {% endif %}
+
+                    {% for error in field.errors %}
+                        <div class="field-error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+            {% endfor %}
+
+            {% if form.non_field_errors %}
+                <div class="field-error">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            <button type="submit" class="auth-submit">
+                Create My Account →
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+            Already have an account?
+            <a href="{% url 'login' %}">Login</a>
+        </div>
+
+    </div>
+
+</section>
+
+</body>
+</html>

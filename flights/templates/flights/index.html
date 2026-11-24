@@ -1,0 +1,259 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>QuickSky Flights | Book Your Journey</title>
+
+    <link rel="stylesheet" href="{% static 'flights/css/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+
+        <a href="{% url 'home' %}" class="logo">
+            <span class="logo-icon">✈</span>
+            QuickSky<span>Flights</span>
+        </a>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="{% url 'home' %}" class="active">Home</a>
+            <a href="#destinations">Destinations</a>
+            <a href="#about">About</a>
+        </nav>
+
+        <div class="nav-actions">
+
+            {% if user.is_authenticated %}
+
+            <a href="{% url 'dashboard' %}" class="login-btn">
+                My Account
+            </a>
+
+            {% else %}
+
+            <a href="{% url 'login' %}" class="login-btn">
+                Login
+            </a>
+
+            <a href="{% url 'register' %}" class="login-btn">
+                Register
+            </a>
+
+            {% endif %}
+
+            <button class="menu-btn" id="menuBtn" aria-label="Toggle navigation">☰</button>
+
+        </div>
+
+    </header>
+
+
+    <!-- Hero Section -->
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <span class="tagline">
+                ✦ EXPLORE THE WORLD WITH US
+            </span>
+
+            <h1>
+                Your Journey Begins<br>
+                <span>With QuickSky.</span>
+            </h1>
+
+            <p>
+                Discover amazing destinations, compare flight prices
+                and book your next adventure with ease.
+            </p>
+
+        </div>
+
+
+        <!-- Flight Search -->
+        <div class="search-container">
+
+            <div class="search-heading">
+                <div>
+                    <h2>Find Your Flight</h2>
+                    <p>Search and book your next journey</p>
+                </div>
+
+                <span class="flight-icon">✈</span>
+            </div>
+
+
+            <form action="{% url 'search_flights' %}" method="GET" id="flightSearchForm">
+
+                <div class="trip-options">
+
+                    <label>
+                        <input type="radio" name="trip_type" value="one-way" checked>
+                        <span>One Way</span>
+                    </label>
+
+                    <label>
+                        <input type="radio" name="trip_type" value="round-trip">
+                        <span>Round Trip</span>
+                    </label>
+
+                </div>
+
+
+                <div class="search-grid">
+
+                    <div class="input-group">
+                        <label for="source">FROM</label>
+
+                        <select name="source" id="source" required>
+                            <option value="">Select departure</option>
+                            <option value="Bengaluru">Bengaluru</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Kochi">Kochi</option>
+                        </select>
+                    </div>
+
+
+                    <button type="button" class="swap-btn" id="swapBtn" aria-label="Swap cities">
+                        ⇄
+                    </button>
+
+
+                    <div class="input-group">
+                        <label for="destination">TO</label>
+
+                        <select name="destination" id="destination" required>
+                            <option value="">Select destination</option>
+                            <option value="Bengaluru">Bengaluru</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Kochi">Kochi</option>
+                        </select>
+                    </div>
+
+
+                    <div class="input-group">
+                        <label for="departure">DEPARTURE</label>
+
+                        <input type="date" name="departure" id="departure" required>
+                    </div>
+
+
+                    <div class="input-group">
+                        <label for="passengers">PASSENGERS</label>
+
+                        <select name="passengers" id="passengers">
+                            <option value="1">1 Passenger</option>
+                            <option value="2">2 Passengers</option>
+                            <option value="3">3 Passengers</option>
+                            <option value="4">4 Passengers</option>
+                            <option value="5">5 Passengers</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <button type="submit" class="search-btn">
+                    Search Flights <span>→</span>
+                </button>
+
+            </form>
+
+        </div>
+
+    </section>
+
+
+    <!-- Benefits -->
+    <section class="benefits" id="about">
+
+        <div class="benefit-card">
+            <div class="benefit-icon">🌍</div>
+            <h3>Explore Anywhere</h3>
+            <p>Discover exciting destinations across India.</p>
+        </div>
+
+        <div class="benefit-card">
+            <div class="benefit-icon">💰</div>
+            <h3>Best Prices</h3>
+            <p>Compare fares and find affordable flights.</p>
+        </div>
+
+        <div class="benefit-card">
+            <div class="benefit-icon">⚡</div>
+            <h3>Easy Booking</h3>
+            <p>Enjoy a simple and smooth booking experience.</p>
+        </div>
+
+    </section>
+
+
+    <!-- Popular destinations -->
+    <section class="destinations" id="destinations">
+
+        <div class="section-heading">
+            <span>TRAVEL INSPIRATION</span>
+            <h2>Popular Destinations</h2>
+            <p>Find your next favourite destination.</p>
+        </div>
+
+        <div class="destination-grid">
+
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=700" alt="Mumbai skyline">
+                <div class="destination-info">
+                    <h3>Mumbai</h3>
+                    <p>City of Dreams</p>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1599661046827-dacff0c0f09a?w=700" alt="Jaipur palace">
+                <div class="destination-info">
+                    <h3>Jaipur</h3>
+                    <p>The Pink City</p>
+                </div>
+            </div>
+
+            <div class="destination-card">
+                <img src="https://images.unsplash.com/photo-1567157577867-05ccb1388e66?w=700" alt="Delhi India Gate">
+                <div class="destination-info">
+                    <h3>Delhi</h3>
+                    <p>History Meets Modernity</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Footer -->
+    <footer>
+        <a href="{% url 'home' %}" class="logo footer-logo">
+            ✈ QuickSky<span>Flights</span>
+        </a>
+
+        <p>© 2026 QuickSky Flights. All rights reserved.</p>
+        <p>Making every journey memorable.</p>
+    </footer>
+
+
+    <script src="{% static 'flights/js/script.js' %}"></script>
+
+</body>
+
+</html>
